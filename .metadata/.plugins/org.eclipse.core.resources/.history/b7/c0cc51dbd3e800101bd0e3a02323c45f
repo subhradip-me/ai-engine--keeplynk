@@ -1,0 +1,18 @@
+package com.keeplynk.ai.skill;
+
+import com.keeplynk.ai.agent.AgentContext;
+import org.springframework.stereotype.Component;
+
+@Component
+public class TagSkill implements Skill {
+
+    @Override
+    public void apply(AgentContext context) {
+        context.addReasoning("TagSkill started");
+        
+        // TODO: Extract or generate tags
+        context.getMemory().put("tags", "ai, resource, content");
+        
+        context.addReasoning("TagSkill inferred tags");
+    }
+}

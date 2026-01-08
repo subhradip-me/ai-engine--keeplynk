@@ -1,0 +1,18 @@
+package com.keeplynk.ai.skill;
+
+import com.keeplynk.ai.agent.AgentContext;
+import org.springframework.stereotype.Component;
+
+@Component
+public class DescriptionSkill implements Skill {
+
+    @Override
+    public void apply(AgentContext context) {
+        context.addReasoning("DescriptionSkill started");
+        
+        // TODO: Generate or enhance description using LLM
+        context.getMemory().put("description", "AI-generated description");
+        
+        context.addReasoning("DescriptionSkill generated description");
+    }
+}

@@ -1,0 +1,7 @@
+spring.application.name=ai-engine
+
+server.port=8081
+
+
+llm.gemini.api.key=AIzaSyC76Er-r6rFlgGxMR3iNl1uF4xdyFOTSTE
+llm.gemini.endpoint=https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent

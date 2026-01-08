@@ -1,0 +1,43 @@
+package com.keeplynk.ai.skill;
+
+import com.keeplynk.ai.agent.AgentContext;
+import com.keeplynk.ai.llm.LlmClient;
+
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+
+@Component
+@Order(1)
+public class TitleSkill implements Skill {
+
+    private final LlmClient llmClient;
+
+    public TitleSkill(LlmClient llmClient) {
+        this.llmClient = llmClient;
+    }
+
+    @Override
+    public void apply(AgentContext context) {
+        context.addReasoning("TitleSkill started");
+        
+        String prompt = """
+        		Generate a concise, clear title for the following URL.
+
+        		URL: %s
+        		Persona: %s
+
+        		Rules:
+        		- Max 10 words
+        		- No emojis
+        		- No quotes
+        		- Output title only
+        		""".formatted(context.getUrl(), context.getPersona());
+        
+
+        String title = llmClient.generate(prompt);
+        context.getMemory().put("suggestedTitle", title);
+        
+        context.addReasoning("TitleSkill generated suggestedTitle");
+    }
+}
+

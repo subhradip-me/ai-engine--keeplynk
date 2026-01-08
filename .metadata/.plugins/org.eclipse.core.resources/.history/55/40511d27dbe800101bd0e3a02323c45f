@@ -1,0 +1,58 @@
+package com.keeplynk.ai.llm;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
+@Component
+@Primary   // 👈 IMPORTANT (avoid multiple bean conflict)
+public class GeminiLlmClient implements LlmClient {
+
+    @Value("${llm.gemini.api.key}")
+    private String apiKey;
+
+    @Value("${llm.gemini.endpoint}")
+    private String endpoint;
+
+    private final RestTemplate restTemplate = new RestTemplate();
+
+    @Override
+    public String generate(String prompt) {
+
+        Map<String, Object> body = Map.of(
+            "contents", List.of(
+                Map.of(
+                    "parts", List.of(
+                        Map.of("text", prompt)
+                    )
+                )
+            )
+        );
+
+        String url = endpoint + "?key=" + apiKey;
+
+        try {
+            ResponseEntity<Map> response =
+                restTemplate.postForEntity(url, body, Map.class);
+
+            Map<String, Object> responseBody = response.getBody();
+
+            // Gemini response extraction (simple & safe)
+            List candidates = (List) responseBody.get("candidates");
+            Map first = (Map) candidates.get(0);
+            Map content = (Map) first.get("content");
+            List parts = (List) content.get("parts");
+            Map textPart = (Map) parts.get(0);
+
+            return textPart.get("text").toString();
+
+        } catch (Exception e) {
+            return "AI generation failed";
+        }
+    }
+}
