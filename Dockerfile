@@ -54,5 +54,8 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
 # JVM options for container environments
 ENV JAVA_OPTS="-Xmx512m -Xms256m -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
 
-# Run the application with proper port handling
-ENTRYPOINT ["sh", "-c", "exec java $JAVA_OPTS -Dserver.port=${PORT:-8081} -jar app.jar"]
+# Set default port (will be overridden by Railway's PORT env var)
+ENV SERVER_PORT=8081
+
+# Run the application - Spring Boot automatically reads SERVER_PORT env var
+ENTRYPOINT ["sh", "-c", "exec java $JAVA_OPTS -jar app.jar"]
