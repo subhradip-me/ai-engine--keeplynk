@@ -11,6 +11,9 @@ COPY ai-engine/mvnw .
 COPY ai-engine/.mvn .mvn
 COPY ai-engine/pom.xml .
 
+# Make Maven wrapper executable
+RUN chmod +x mvnw
+
 # Download dependencies (cached layer)
 RUN ./mvnw dependency:go-offline -B
 
