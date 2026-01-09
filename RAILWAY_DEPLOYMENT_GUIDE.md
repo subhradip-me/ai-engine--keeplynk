@@ -8,6 +8,16 @@ Quick guide to deploy the KeepLynk AI Engine on Railway. Railway will automatica
 - API keys: [Gemini](https://makersuite.google.com/app/apikey), [GROQ](https://console.groq.com/), [Hugging Face](https://huggingface.co/settings/tokens)
 - Git repository with code pushed to GitHub
 
+## 🚀 Quick Deploy
+
+### Step 1: Connect to Railway
+
+1. Go to [Railway.app](https://railway.app/)
+2. Click **"New Project"**
+3. Select **"Deploy from GitHub repo"**
+4. Choose your repository: `subhradip-me/ai-engine--keeplynk`
+5. Railway will detect the Dockerfile automatically
+
 ## 🚀 Deployment Steps
 
 ### Step 1: Create a New Railway Project
@@ -21,11 +31,17 @@ Quick guide to deploy the KeepLynk AI Engine on Railway. Railway will automatica
 
 ### Step 2: Configure the Service
 
-1. After selecting the repository, Railway will start analyzing it
-2. Click on **"Settings"** in your service
-3. Under **"Root Directory"**, set it to: `services/ai-engine/ai-engine`
-4. Under **"Build Command"**, it should auto-detect Maven (if not, set to `./mvnw clean package -DskipTests`)
-5. Under **"Start Command"**, verify it's: `java -Dserver.port=$PORT -jar target/ai-engine-0.0.1-SNAPSHOT.jar`
+**Important:** Railway scans the repository root. The project is already configured with:
+- ✅ `Dockerfile` at root level (references `ai-engine/` subdirectory)
+- ✅ `railway.json` - Railway configuration
+- ✅ `railway.toml` - Alternative configuration
+
+Railway will automatically:
+1. Detect the Dockerfile
+2. Build the Java application from the `ai-engine/` subdirectory
+3. Create a container with the application
+
+No additional root directory configuration needed!
 
 ### Step 3: Add MongoDB Database
 

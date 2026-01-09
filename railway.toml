@@ -1,0 +1,9 @@
+# Railway Configuration
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+startCommand = "java -Dserver.port=$PORT -jar app.jar"
+healthcheckPath = "/actuator/health"
+healthcheckTimeout = 100
