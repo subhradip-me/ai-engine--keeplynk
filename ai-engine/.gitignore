@@ -33,5 +33,11 @@ build/
 
 ### VS Code ###
 .vscode/
-### Application Properties with Secrets ###
-src/main/resources/application.properties
+
+### Environment Variables ###
+.env
+.env.local
+.env.*.local
+
+### Docker ###
+docker-compose.override.yml

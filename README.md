@@ -3,13 +3,31 @@
 [![Java](https://img.shields.io/badge/Java-21-blue)](https://openjdk.org/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0.1-brightgreen)](https://spring.io/projects/spring-boot)
 [![Maven](https://img.shields.io/badge/Maven-Build-orange)](https://maven.apache.org/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-blue)](https://www.docker.com/)
 
 **AI Engine** is an intelligent agent orchestration system for KeepLynk. It provides decision-making capabilities, content analysis, and automated agent workflows to enhance user experience through smart content management and personalization.
 
 The engine uses a modular, skill-based architecture with multiple LLM providers to automatically generate metadata (titles, descriptions, tags) for saved web resources, making them more discoverable and organized.
 
+## 🚀 Quick Start with Docker
+
+```bash
+# 1. Configure environment
+cp .env.example .env
+# Edit .env with your API keys
+
+# 2. Start services
+docker-compose up -d
+
+# 3. Verify health
+curl http://localhost:8081/actuator/health
+```
+
+📚 **[Docker Deployment Guide](DOCKER_DEPLOYMENT.md)** | **[Railway Deployment](RAILWAY_DEPLOYMENT_GUIDE.md)**
+
 ## 📋 Table of Contents
 
+- [Deploy to Railway](#-deploy-to-railway)
 - [Features](#features)
 - [Architecture](#architecture)
 - [Prerequisites](#prerequisites)
