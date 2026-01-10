@@ -3,6 +3,8 @@ package com.keeplynk.ai.llm;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
@@ -17,6 +19,8 @@ import org.springframework.web.client.RestTemplate;
 @Component
 @Primary
 public class GroqLlmClient implements LlmClient {
+
+    private static final Logger log = LoggerFactory.getLogger(GroqLlmClient.class);
 
     @Value("${groq.api.key}")
     private String apiKey;
@@ -66,17 +70,17 @@ public class GroqLlmClient implements LlmClient {
             return message.get("content").toString();
 
         } catch (Exception e) {
-            System.out.println("Groq API failed, falling back to Gemini: " + e.getMessage());
+            log.error("Groq API failed, falling back to Gemini", e);
             
             try {
                 return geminiLlmClient.generate(prompt);
             } catch (Exception e2) {
-                System.out.println("Gemini API failed, falling back to HuggingFace: " + e2.getMessage());
+                log.error("Gemini API failed, falling back to HuggingFace", e2);
                 
                 try {
                     return huggingFaceLlmClient.generate(prompt);
                 } catch (Exception e3) {
-                    System.out.println("All LLM providers failed: " + e3.getMessage());
+                    log.error("All LLM providers failed", e3);
                     return "AI generation failed - all providers unavailable";
                 }
             }
