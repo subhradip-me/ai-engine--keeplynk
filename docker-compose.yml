@@ -26,8 +26,8 @@ services:
   # AI Engine Service
   ai-engine:
     build:
-      context: ./ai-engine
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ai-engine/Dockerfile
     container_name: keeplynk-ai-engine
     restart: unless-stopped
     ports:
