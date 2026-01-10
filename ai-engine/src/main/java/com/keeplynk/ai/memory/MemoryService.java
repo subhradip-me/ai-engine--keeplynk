@@ -4,11 +4,9 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Service;
 
 @Service
-@ConditionalOnBean(AgentMemoryRepository.class)
 public class MemoryService {
 
     private final AgentMemoryRepository repo;
